@@ -9,11 +9,14 @@ namespace WebSalesMvc.Data
 {
     public class WebSalesMvcContext : DbContext
     {
-        public WebSalesMvcContext (DbContextOptions<WebSalesMvcContext> options)
+        public WebSalesMvcContext(DbContextOptions<WebSalesMvcContext> options)
             : base(options)
         {
         }
 
-        public DbSet<WebSalesMvc.Models.Department> Department { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Seller> Sellers { get; set; }
+        public DbSet<SalesRecord> SalesRecords { get; set; }
+
     }
 }
