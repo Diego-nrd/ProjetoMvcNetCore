@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebSalesMvc.Data;
 using WebSalesMvc.Models;
+using WebSalesMvc.Services.Exceptions;
 
 namespace WebSalesMvc.Services
 {
@@ -39,6 +40,23 @@ namespace WebSalesMvc.Services
             var obj = _context.Sellers.Find(id);
             _context.Sellers.Remove(obj);
             _context.SaveChanges();
+        }
+
+        public void Update(Seller obj)
+        {
+            if (!_context.Sellers.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id not Found");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new DbCouncureencyException(e.Message);
+            }
         }
 
     }
